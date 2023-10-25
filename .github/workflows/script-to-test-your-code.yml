@@ -7,6 +7,7 @@ on:
     push:
         branches:
             - main
+
     pull_request:
         branches:
             - main
@@ -25,23 +26,23 @@ jobs:
 
     steps:
         - name: Checkout
-        - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
         - name: Setup node
-        - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
           with:
             node-version: 14
 
         - name: Gather files changed
-            uses: trilom/file-changes-action@a6ca26c14274c33b15e6499323aac178af06ad4b
-            with:
+        uses: trilom/file-changes-action@a6ca26c14274c33b15e6499323aac178af06ad4b
+        with:
               fileOutput: 'json'
         
         - name: Show files changed
-              run: cat $HOME/files.json
+        run: cat $HOME/files.json
 
         - name: Link check (warnings, changed files)
-              run: |
+        run: |
                 ./script/rendered-content-link-checker.mjs \
                   --language en \
                   --max 100 \
@@ -51,7 +52,7 @@ jobs:
                   --list $HOME/files.json
 
         - name: Link check (critical, all files)
-                  run: |
+        run: |
                     ./script/rendered-content-link-checker.mjs \
                       --language en \
                       --exit \
